@@ -1,0 +1,23 @@
+//stm32
+#include "mbed.h"
+ 
+Ticker ticker;
+DigitalOut led1(PC_13);
+CAN can(PB_8, PB_9);
+char counter = 0;
+
+void send() {
+    CANMessage msg(0x1337, &counter, 1); // create and initialize msg to being the message to send.
+    if(can.write(msg)){                  // send the message
+     counter++;
+     led1 = !led1;
+     //printf("Message sent: %d\n", counter);
+    }
+}
+ 
+int main() {
+    can.frequency(500000);
+    // can.mode(CAN::Normal);
+    ticker.attach(&send, 1); //panggil fungsi send tiap 1 detik   
+    }
+
