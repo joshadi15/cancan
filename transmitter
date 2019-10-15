@@ -1,0 +1,21 @@
+//nucleo
+#include "mbed.h"
+ 
+Serial pc(USBTX, USBRX);
+DigitalOut led2(PA_5);
+CAN can(PA_11, PA_12);
+CANMessage msg;
+ 
+int main() {
+   can.frequency(500000);
+   can.mode(CAN::Normal);
+   pc.printf("hello josh ! :)\n");
+    while(1) {
+        if(can.read(msg)) {
+         pc.printf("hello2 \n");
+         pc.printf("Message received: %d\n", msg.data[0]);
+         led2 = !led2;
+        } 
+        wait(0.2);
+    }
+}
