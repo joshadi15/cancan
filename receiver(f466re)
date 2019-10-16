@@ -1,14 +1,14 @@
 //nucleo
 #include "mbed.h"
  
-Serial pc(USBTX, USBRX);
+Serial pc(USBTX, USBRX, 115200);
 DigitalOut led2(PA_5);
 CAN can(PA_11, PA_12);
-CANMessage msg;
  
 int main() {
-   can.frequency(500000);
-   can.mode(CAN::Normal);
+   can.frequency(200000);
+   //can.mode(CAN::Normal);
+   CANMessage msg;
    pc.printf("hello josh ! :)\n");
     while(1) {
         if(can.read(msg)) {
